@@ -1,0 +1,16 @@
+#quiz-container {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+#answer-options li {
+    list-style-type: none;
+    padding: 8px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    cursor: pointer;
+}
+#answer-options li:hover {
+    background-color: #e9e9e9;
+}
