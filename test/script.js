@@ -1,61 +1,72 @@
-const quizQuestions = [
-    {
-        question: "What is the capital of France?",
-        options: ["New York", "London", "Paris", "Tokyo"],
-        answer: "Paris"
-    },
-    {
-        question: "What is 2 + 2?",
-        options: ["3", "4", "5", "6"],
-        answer: "4"
-    },
-    {
-        question: "Who painted the Mona Lisa?",
-        options: ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"],
-        answer: "Da Vinci"
-    }
+var questions = [
+    // ... questions array as previously defined
 ];
 
-let currentQuestionIndex = 0;
-let score = 0;
+var timeLeft = 60;
+var currentQuestionIndex = 0;
+var timerElement = document.getElementById('time');
+var startButton = document.getElementById('start-btn');
+var questionContainerElement = document.getElementById('question-container');
+var questionElement = document.getElementById('question');
+var answerButtonsElement = document.getElementById('answer-buttons');
 
-function displayQuestion() {
-    const question = quizQuestions[currentQuestionIndex];
-    document.getElementById('question').textContent = question.question;
-    const options = document.getElementById('answer-options');
-    options.innerHTML = '';
+startButton.addEventListener('click', startGame);
 
-    question.options.forEach(option => {
-        const li = document.createElement('li');
-        li.textContent = option;
-        li.onclick = () => selectAnswer(option);
-        options.appendChild(li);
+function startGame() {
+    startButton.classList.add('hide');
+    questionContainerElement.classList.remove('hide');
+    setQuestion();
+    startTimer();
+}
+
+function startTimer() {
+    updateTimer(); // Initialize the timer display
+    var intervalId = setInterval(function() {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+            clearInterval(intervalId);
+            // Call a function to end the game
+        }
+    }, 1000);
+}
+
+function setQuestion() {
+    showQuestion(questions[currentQuestionIndex]);
+}
+
+function showQuestion(question) {
+    questionElement.innerText = question.question;
+    question.answers.forEach(function(answer) {
+        var button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', selectAnswer);
+        answerButtonsElement.appendChild(button);
     });
 }
 
-function selectAnswer(option) {
-    const question = quizQuestions[currentQuestionIndex];
-    if (option === question.answer) {
-        score++;
-    }
-    nextQuestion();
+function resetState() {
+    // Clear out any old question data
 }
 
-function nextQuestion() {
+function selectAnswer(e) {
+    var selectedButton = e.target;
+    var correct = selectedButton.dataset.correct;
+    if (!correct) {
+        timeLeft -= 10;
+    }
     currentQuestionIndex++;
-    if (currentQuestionIndex < quizQuestions.length) {
-        displayQuestion();
+    if (currentQuestionIndex < questions.length) {
+        setQuestion();
     } else {
-        showResults();
+        // Call a function to end the game
     }
 }
 
-function showResults() {
-    const result = document.getElementById('result');
-    result.textContent = `Your score is ${score} out of ${quizQuestions.length}`;
-    document.getElementById('answer-options').innerHTML = '';
-    document.getElementById('question').textContent = '';
-    document.getElementById('quiz-container').appendChild(result);
+function updateTimer() {
+    timerElement.innerText = timeLeft;
 }
-
-document.addEventListener('DOMContentLoaded', displayQuestion);
