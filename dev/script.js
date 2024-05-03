@@ -1,6 +1,7 @@
 var startButton = document.getElementById("start");
 var saveButton = document.getElementById("save");
 var leaderboardButton = document.getElementById("leaderboard");
+var optionList = document.getElementById("optionList");
 
 var questions = [
   {
@@ -21,10 +22,42 @@ var questions = [
 ];
 
 var currentIndex = 0;
+var currentQuestion = questions[currentIndex];
 
 function displayQuestions() {
-  var currentQuestion = questions[currentIndex];
   document.getElementById("question").innerText = `${currentQuestion.question}`;
+  document.getElementById(
+    "option1"
+  ).innerText = `${currentQuestion.options[0]}`;
+  document.getElementById(
+    "option2"
+  ).innerText = `${currentQuestion.options[1]}`;
+  document.getElementById(
+    "option3"
+  ).innerText = `${currentQuestion.options[2]}`;
+  document.getElementById(
+    "option4"
+  ).innerText = `${currentQuestion.options[3]}`;
 }
 
-startButton.addEventListener("click", displayQuestion);
+function nextQuestion() {
+  ++currentIndex;
+  document.getElementById("question").innerText = `${currentQuestion.question}`;
+  document.getElementById(
+    "option1"
+  ).innerText = `${currentQuestion.options[0]}`;
+  document.getElementById(
+    "option2"
+  ).innerText = `${currentQuestion.options[1]}`;
+  document.getElementById(
+    "option3"
+  ).innerText = `${currentQuestion.options[2]}`;
+  document.getElementById(
+    "option4"
+  ).innerText = `${currentQuestion.options[3]}`;
+  console.log("clicked");
+  console.log(currentIndex);
+}
+
+startButton.addEventListener("click", displayQuestions);
+optionList.addEventListener("click", nextQuestion);

@@ -17,6 +17,8 @@ body {
     align-items: center;
 }
 
-#answers {
-    
+.options {
+    text-align: left;
+    display: flex;
+    justify-content: center;
 }
