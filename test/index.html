@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timed Quiz</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="quiz-container">
-    <h1>Coding Quiz Challenge</h1>
-    <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-    <button id="start-btn">Start Quiz</button>
-
-    <div id="question-container" class="hide">
-        <div id="question">Question</div>
-        <div id="answer-buttons" class="btn-grid">
-            <button class="btn">Answer 1</button>
-            <button class="btn">Answer 2</button>
-            <button class="btn">Answer 3</button>
-            <button class="btn">Answer 4</button>
-        </div>
+  <div id="quiz-container">
+    <div id="timer">Time left: 60s</div>
+    <h1 id="question">JavaScript Quiz</h1>
+    <ul class="hidden" id="optionList">
+      <button class="button" id="option1">Option 1</button>
+      <button class="button" id="option2">Option 2</button>
+      <button class="button" id="option3">Option 3</button>
+      <button class="button" id="option4">Option 4</button>
+    </ul>
+    <button class="button" id="start">Start Quiz</button>
+    <button class="button" id="save">Save Score</button>
+    <button class="button" id="leaderboard-button">Leaderboard</button>
+    <div class="hidden" id="leaderboard">
+      <h2>Leaderboard</h2>
+      <ul id="leaderboard-list">
+      </ul>
     </div>
+  </div>
 
-    <div id="timer">Time: <span id="time">0</span></div>
-</div>
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

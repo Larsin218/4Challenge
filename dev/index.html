@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="quiz">
-        <h1>JavaScript Quiz</h1>
-        <div id="question">asdfjkl;asdjfkl;asdfjk;asdlfkj</div>
-        <div class="options">
-            <ol id="optionList">
-                <li id="option1"></li>
-                <li id="option2"></li>
-                <li id="option3"></li>
-                <li id="option4"></li>
-            </ol>
-        </div>
-        <button id="start">Start</button>
-        <button id="save">Save</button>
-        <button id="leaderboard">Leaderboard</button>
-        <div id="result"></div>
+  <div id="quiz-container">
+    <div id="timer">Time left: 60s</div>
+    <h1 id="question">JavaScript Quiz</h1>
+    <ul class="hidden" id="optionList">
+      <li id="option1">Option 1</li>
+      <li id="option2">Option 2</li>
+      <li id="option3">Option 3</li>
+      <li id="option4">Option 4</li>
+    </ul>
+    <button class="button" id="start">Start Quiz</button>
+    <button class="button" id="save">Save Progress</button>
+    <button class="button" id="leaderboard-button">View Leaderboard</button>
+    <div id="leaderboard">
+      <h2>Leaderboard</h2>
+      <ul id="leaderboard-list">
+      </ul>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

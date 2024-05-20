@@ -1,72 +1,108 @@
+var startButton = document.getElementById("start");
+var saveButton = document.getElementById("save");
+var leaderboardButton = document.getElementById("leaderboard-button");
+var optionList = document.getElementById("optionList");
+var timerElement = document.getElementById("timer");
+var leaderboard = document.getElementById("leaderboard");
+// var leaderboardList = document.getElementById("leaderboard-list");
+
 var questions = [
-    // ... questions array as previously defined
+  {
+    question: "What is the capital of France?",
+    options: ["New York", "London", "Paris", "Tokyo"],
+    answer: "Paris",
+  },
+  {
+    question: "What is 2 + 2?",
+    options: ["3", "4", "5", "6"],
+    answer: "4",
+  },
+  {
+    question: "Who painted the Mona Lisa?",
+    options: ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"],
+    answer: "Da Vinci",
+  },
 ];
 
+var currentIndex = 0;
+var timer;
 var timeLeft = 60;
-var currentQuestionIndex = 0;
-var timerElement = document.getElementById('time');
-var startButton = document.getElementById('start-btn');
-var questionContainerElement = document.getElementById('question-container');
-var questionElement = document.getElementById('question');
-var answerButtonsElement = document.getElementById('answer-buttons');
+var score = 0;
+var selectedAnswer = optionList.target
 
-startButton.addEventListener('click', startGame);
+function displayQuestions() {
+  var currentQuestion = questions[currentIndex];
+  document.getElementById("question").innerText = currentQuestion.question;
+  document.getElementById("option1").innerText = currentQuestion.options[0];
+  document.getElementById("option2").innerText = currentQuestion.options[1];
+  document.getElementById("option3").innerText = currentQuestion.options[2];
+  document.getElementById("option4").innerText = currentQuestion.options[3];
+}
 
-function startGame() {
-    startButton.classList.add('hide');
-    questionContainerElement.classList.remove('hide');
-    setQuestion();
-    startTimer();
+function nextQuestion(selectedAnswer) {
+  tallyScore(selectedAnswer)
+  currentIndex++;
+  if (currentIndex < questions.length) {
+    displayQuestions();
+  } else {
+    endQuiz("Quiz completed!");
+  }
+  console.log('score = ' + score);
 }
 
 function startTimer() {
-    updateTimer(); // Initialize the timer display
-    var intervalId = setInterval(function() {
-        timeLeft--;
-        updateTimer();
-        if (timeLeft <= 0) {
-            clearInterval(intervalId);
-            // Call a function to end the game
-        }
-    }, 1000);
-}
-
-function setQuestion() {
-    showQuestion(questions[currentQuestionIndex]);
-}
-
-function showQuestion(question) {
-    questionElement.innerText = question.question;
-    question.answers.forEach(function(answer) {
-        var button = document.createElement('button');
-        button.innerText = answer.text;
-        button.classList.add('btn');
-        if (answer.correct) {
-            button.dataset.correct = answer.correct;
-        }
-        button.addEventListener('click', selectAnswer);
-        answerButtonsElement.appendChild(button);
-    });
-}
-
-function resetState() {
-    // Clear out any old question data
-}
-
-function selectAnswer(e) {
-    var selectedButton = e.target;
-    var correct = selectedButton.dataset.correct;
-    if (!correct) {
-        timeLeft -= 10;
+  timer = setInterval(function() {
+    timeLeft--;
+    timerElement.innerText = `Time left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      endQuiz("Time's up!");
     }
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        setQuestion();
-    } else {
-        // Call a function to end the game
-    }
+  }, 1000);
 }
 
-function updateTimer() {
-    timerElement.innerText = timeLeft;
+function endQuiz(message) {
+  clearInterval(timer);
+  document.getElementById("question").innerText = message;
+  document.getElementById("option1").innerText = "";
+  document.getElementById("option2").innerText = "";
+  document.getElementById("option3").innerText = "";
+  document.getElementById("option4").innerText = "";
+  optionList.classList.toggle('hidden');
 }
+
+function tallyScore(selectedAnswer) {
+  if (selectedAnswer === questions[currentIndex].answer) {
+    score++;
+  }
+}
+
+function saveScore() {}
+
+function loadScore() {}
+
+function showList() {
+  optionList.classList.toggle('hidden');
+}
+
+startButton.addEventListener("click", function() {
+  currentIndex = 0;
+  score = 0;
+  timeLeft = 60;
+  displayQuestions();
+  startTimer();
+  showList();
+});
+
+optionList.addEventListener("click", function(optionList) {
+  if (optionList.target.tagName === "BUTTON") {
+    tallyScore(selectedAnswer);
+    nextQuestion();
+  }
+});
+
+saveButton.addEventListener("click", saveScore);
+
+leaderboardButton.addEventListener("click", function() {
+  loadScore();
+  leaderboard.classList.toggle('hidden');
+});

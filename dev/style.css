@@ -7,7 +7,7 @@ body {
     justify-content: center;
 }
 
-.quiz {
+#quiz-container {
     background-color: white;
     margin: 10%;
     padding: 5%;
@@ -17,8 +17,19 @@ body {
     align-items: center;
 }
 
-.options {
+#optionList {
     text-align: left;
-    display: flex;
-    justify-content: center;
+}
+
+#timer {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.button {
+    margin: 5px;
+}
+
+.hidden {
+    display: none
 }
