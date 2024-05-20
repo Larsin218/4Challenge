@@ -4,7 +4,7 @@ var leaderboardButton = document.getElementById("leaderboard-button");
 var optionList = document.getElementById("optionList");
 var timerElement = document.getElementById("timer");
 var leaderboard = document.getElementById("leaderboard");
-// var leaderboardList = document.getElementById("leaderboard-list");
+var leaderboardList = document.getElementById("leaderboard-list");
 
 var questions = [
   {
@@ -28,7 +28,6 @@ var currentIndex = 0;
 var timer;
 var timeLeft = 60;
 var score = 0;
-var selectedAnswer = optionList.target
 
 function displayQuestions() {
   var currentQuestion = questions[currentIndex];
@@ -40,18 +39,18 @@ function displayQuestions() {
 }
 
 function nextQuestion(selectedAnswer) {
-  tallyScore(selectedAnswer)
+  tallyScore(selectedAnswer);
   currentIndex++;
   if (currentIndex < questions.length) {
     displayQuestions();
   } else {
     endQuiz("Quiz completed!");
   }
-  console.log('score = ' + score);
+  console.log("score = " + score);
 }
 
 function startTimer() {
-  timer = setInterval(function() {
+  timer = setInterval(function () {
     timeLeft--;
     timerElement.innerText = `Time left: ${timeLeft}s`;
     if (timeLeft <= 0) {
@@ -67,7 +66,7 @@ function endQuiz(message) {
   document.getElementById("option2").innerText = "";
   document.getElementById("option3").innerText = "";
   document.getElementById("option4").innerText = "";
-  optionList.classList.toggle('hidden');
+  optionList.classList.toggle("hidden");
 }
 
 function tallyScore(selectedAnswer) {
@@ -76,15 +75,29 @@ function tallyScore(selectedAnswer) {
   }
 }
 
-function saveScore() {}
-
-function loadScore() {}
-
-function showList() {
-  optionList.classList.toggle('hidden');
+function saveScore() {
+  var initials = window.prompt("Enter your initials");
+  localStorage.setItem(`${initials}`, JSON.stringify(score));
 }
 
-startButton.addEventListener("click", function() {
+function loadScore() {
+  var scores = "";
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    const score = JSON.parse(value);
+    scores += `${key} - ${score}<br>`;
+  }
+  leaderboardList.innerHTML = `${scores}`
+}
+
+console.log(localStorage.length);
+
+function showList() {
+  optionList.classList.toggle("hidden");
+}
+
+startButton.addEventListener("click", function () {
   currentIndex = 0;
   score = 0;
   timeLeft = 60;
@@ -93,16 +106,16 @@ startButton.addEventListener("click", function() {
   showList();
 });
 
-optionList.addEventListener("click", function(optionList) {
+optionList.addEventListener("click", function (optionList) {
   if (optionList.target.tagName === "BUTTON") {
-    tallyScore(selectedAnswer);
-    nextQuestion();
+    var selectedAnswer = optionList.target.innerText;
+    nextQuestion(selectedAnswer);
   }
 });
 
 saveButton.addEventListener("click", saveScore);
 
-leaderboardButton.addEventListener("click", function() {
+leaderboardButton.addEventListener("click", function () {
   loadScore();
-  leaderboard.classList.toggle('hidden');
+  leaderboard.classList.toggle("hidden");
 });
