@@ -1,9 +1,11 @@
 var startButton = document.getElementById("start");
 var saveButton = document.getElementById("save");
 var leaderboardButton = document.getElementById("leaderboard-button");
+var clearButton = document.getElementById('clear');
 var optionList = document.getElementById("optionList");
 var timerElement = document.getElementById("timer");
 var leaderboard = document.getElementById("leaderboard");
+var leaderboardList = document.getElementById("leaderboard-list");
 
 var questions = [
   {
@@ -37,17 +39,19 @@ function displayQuestions() {
   document.getElementById("option4").innerText = currentQuestion.options[3];
 }
 
-function nextQuestion() {
+function nextQuestion(selectedAnswer) {
+  tallyScore(selectedAnswer);
   currentIndex++;
   if (currentIndex < questions.length) {
     displayQuestions();
   } else {
     endQuiz("Quiz completed!");
   }
+  console.log("score = " + score);
 }
 
 function startTimer() {
-  timer = setInterval(function() {
+  timer = setInterval(function () {
     timeLeft--;
     timerElement.innerText = `Time left: ${timeLeft}s`;
     if (timeLeft <= 0) {
@@ -63,33 +67,60 @@ function endQuiz(message) {
   document.getElementById("option2").innerText = "";
   document.getElementById("option3").innerText = "";
   document.getElementById("option4").innerText = "";
-  optionList.classList.add('hidden');
+  optionList.classList.toggle("hidden");
+}
+
+function tallyScore(selectedAnswer) {
+  if (selectedAnswer === questions[currentIndex].answer) {
+    score++;
+  }
 }
 
 function saveScore() {
-  
+  var initials = window.prompt("Enter your initials");
+  localStorage.setItem(`${initials}`, JSON.stringify(score));
 }
 
 function loadScore() {
-  
+  var scores = "";
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    const score = JSON.parse(value);
+    scores += `${key} - ${score}<br>`;
+  }
+  leaderboardList.innerHTML = `${scores}`
 }
 
 function showList() {
-  optionList.classList.remove('hidden');
+  optionList.classList.toggle("hidden");
 }
 
-startButton.addEventListener("click", function() {
+function clearLeaderboard () {
+  localStorage.clear();
+}
+
+startButton.addEventListener("click", function () {
+  currentIndex = 0;
+  score = 0;
+  timeLeft = 60;
   displayQuestions();
   startTimer();
   showList();
 });
 
-optionList.addEventListener("click", function(optionList) {
-  if (optionList.target.tagName === "LI") {
-    nextQuestion();
+optionList.addEventListener("click", function (optionList) {
+  if (optionList.target.tagName === "BUTTON") {
+    var selectedAnswer = optionList.target.innerText;
+    nextQuestion(selectedAnswer);
   }
 });
 
 saveButton.addEventListener("click", saveScore);
 
+leaderboardButton.addEventListener("click", function () {
+  loadScore();
+  leaderboard.classList.toggle("hidden");
+});
 
+clearButton.addEventListener('click', clearLeaderboard);
