@@ -1,7 +1,7 @@
 var startButton = document.getElementById("start");
 var saveButton = document.getElementById("save");
 var leaderboardButton = document.getElementById("leaderboard-button");
-var clearButton = document.getElementById('clear');
+var clearButton = document.getElementById("clear");
 var optionList = document.getElementById("optionList");
 var timerElement = document.getElementById("timer");
 var leaderboard = document.getElementById("leaderboard");
@@ -84,20 +84,21 @@ function saveScore() {
 function loadScore() {
   var scores = "";
   for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    const score = JSON.parse(value);
+    var key = localStorage.key(i);
+    var value = localStorage.getItem(key);
+    var score = JSON.parse(value);
     scores += `${key} - ${score}<br>`;
   }
-  leaderboardList.innerHTML = `${scores}`
+  leaderboardList.innerHTML = `${scores}`;
 }
 
 function showList() {
   optionList.classList.toggle("hidden");
 }
 
-function clearLeaderboard () {
+function clearLeaderboard() {
   localStorage.clear();
+  leaderboard.classList.add("hidden");
 }
 
 startButton.addEventListener("click", function () {
@@ -123,4 +124,4 @@ leaderboardButton.addEventListener("click", function () {
   leaderboard.classList.toggle("hidden");
 });
 
-clearButton.addEventListener('click', clearLeaderboard);
+clearButton.addEventListener("click", clearLeaderboard);
