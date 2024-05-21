@@ -83,7 +83,7 @@ function saveScore() {
 
 function loadScore() {
   var scores = "";
-  for (let i = 0; i < localStorage.length; i++) {
+  for (i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var value = localStorage.getItem(key);
     var score = JSON.parse(value);
