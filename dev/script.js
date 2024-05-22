@@ -9,19 +9,54 @@ var leaderboardList = document.getElementById("leaderboard-list");
 
 var questions = [
   {
-    question: "What is the capital of France?",
-    options: ["New York", "London", "Paris", "Tokyo"],
-    answer: "Paris",
+    question: "What html element does JavaScript go inside of?",
+    options: ["<script>", "<javascript>", "<scripting>", "<js>"],
+    answer: "<script>",
   },
   {
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "4",
+    question: "What is the syntax to access an element by its id?",
+    options: ["document.getElement", "document.innerHTML", "document.getElementById", "document.getElementByName"],
+    answer: "document.getElementById",
   },
   {
-    question: "Who painted the Mona Lisa?",
-    options: ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"],
-    answer: "Da Vinci",
+    question: "What is the syntax for linking an external script?",
+    options: ["<script href=''>", "<script src=''>", "<script name=''>", "<script link=''>"],
+    answer: "<script src=''>",
+  },
+  {
+    question: "Is JavaScript case-sensitive?",
+    options: ["Yes", "No"],
+    answer: "Yes",
+  },
+  {
+    question: "Which operator is used to assign a variable?",
+    options: [">", "-", "+", "="],
+    answer: "=",
+  },
+  {
+    question: "How do you add a comment?",
+    options: ["//", "''", "<!--"],
+    answer: "//",
+  },
+  {
+    question: "Is JavaScript the same as Java?",
+    options: ["Yes", "No"],
+    answer: "No",
+  },
+  {
+    question: "How do you call a function?",
+    options: ["function = myFunction()", "myFunction", "myFunction()"],
+    answer: "myFunction()",
+  },
+  {
+    question: "How to write an IF statement?",
+    options: ["if i = 1","if (i = 1)", "if i === 1", "if {i = 1}"],
+    answer: "if (i = 1)",
+  },
+  {
+    question: "How do you write an array?",
+    options: ["var colors = ['red', 'orange', 'yellow']", "var colors = ('red', 'orange', 'yellow')", "var colors = ('red'), ('orange'), ('yellow')"],
+    answer: "var colors = ['red', 'orange', 'yellow']",
   },
 ];
 
